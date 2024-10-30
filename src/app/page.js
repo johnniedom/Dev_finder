@@ -72,7 +72,7 @@ export default function Home() {
       {/*  /* Profile Card */}
       {data.login && (
         <div className="w-full max-w-3xl bg-[#FEFEFE] rounded-lg flex-col shadow-lg p-8 flex gap-8 md:flex-row items-start relative">
-          <div className="flex justify-center gap-12">
+          <div className="flex justify-center md:gap-12 gap-0 md:space-x-0 space-x-3">
             <Image
               src={data.avatar_url}
               width={150}
@@ -81,10 +81,25 @@ export default function Home() {
               sizes="(min-width: 768px) 250px, 250px"
               className="rounded-full"
             />
+            <div className="flex items-baseline w-full flex-col md:hidden ">
+              <div className="flex gap-2 items-start flex-col jut">
+                <h2 className="text-2xl font-bold">{data.name}</h2>
+                <p className="text-blue-500">@{data.login}</p>
+              </div>
+
+              <p className=" ">
+                Joined{" "}
+                {new Date(data.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col gap-4 w-full ">
-            <div className="flex items-baseline w-full flex-col md:flex-row md:gap-10 md:justify-between ">
+            <div className=" items-baseline w-full md:flex hidden flex-col md:flex-row md:gap-10 md:justify-between ">
               <div className="flex gap-2 items-start flex-col jut">
                 <h2 className="text-2xl font-bold">{data.name}</h2>
                 <p className="text-blue-500">@{data.login}</p>
