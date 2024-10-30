@@ -10,11 +10,13 @@ import {
   Building,
   BluetoothConnected,
   Moon,
+  Sun,
 } from "lucide-react";
 
 export default function Home() {
   const [name, setName] = React.useState("");
   const [data, setData] = React.useState({});
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   const handleSearch = async function fetcher(e) {
     e.preventDefault();
@@ -25,22 +27,40 @@ export default function Home() {
       rep.then((userData) => setData(userData));
 
       setName("");
-      console.log(data);
+      console.log(data.twitter_username);
     } catch (err) {
-      throw new Error("User not found");
+      throw new Error(err);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-[#FEFEFE] p-8">
+    <div
+      className={`min-h-screen flex flex-col dark:bg-colors-github-dark items-center dark:text-white bg-[#FEFEFE] p-8  ${
+        isDarkMode ? "dark" : ""
+      }`}
+    >
       {/* Logo and Dark Mode */}
       <div className="w-full max-w-3xl flex justify-between items-center mb-8">
         <h1 className="text-2xl font-mono font-bold">Devfinder</h1>
-        <button className="text-slate-600 flex items-center gap-2">
-          DARK{" "}
-          <span>
-            <Moon />
-          </span>
+        <button
+          className="text-slate-600 flex items-center gap-2 dark:text-[#90A4D4]"
+          onClick={() => setIsDarkMode(!isDarkMode)}
+        >
+          {isDarkMode === false ? (
+            <>
+              DARK{" "}
+              <span>
+                <Moon />
+              </span>
+            </>
+          ) : (
+            <>
+              Light{" "}
+              <span>
+                <Sun />
+              </span>
+            </>
+          )}
         </button>
       </div>
 
@@ -52,7 +72,7 @@ export default function Home() {
         <input
           type="text"
           placeholder="Search GitHub username..."
-          className="w-full p-4 pl-12 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0079FF] focus:ring-opacity-50"
+          className="w-full p-4 pl-12 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0079FF] focus:ring-opacity-50 dark:bg-colors-github-dark"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -62,7 +82,7 @@ export default function Home() {
         </p>
         <button
           type="submit"
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#0079FF] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-sky-500"
+          className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#0079FF] text-white px-4 py-2 rounded-lg shadow-lg hover:bg-[##60ABFF]"
         >
           {" "}
           Search{" "}
@@ -71,8 +91,8 @@ export default function Home() {
 
       {/*  /* Profile Card */}
       {data.login && (
-        <div className="w-full max-w-3xl bg-[#FEFEFE] rounded-lg flex-col shadow-lg p-8 flex gap-8 md:flex-row items-start relative">
-          <div className="flex justify-center md:gap-12 gap-0 md:space-x-0 space-x-3">
+        <div className="w-full max-w-3xl bg-[#FEFEFE] dark:bg-[#1E2A47] rounded-lg flex-col shadow-lg p-8 flex gap-8 md:flex-row items-start relative">
+          <div className="flex justify-center md:gap-12 gap-8 md:space-x-0 space- vx-3">
             <Image
               src={data.avatar_url}
               width={150}
@@ -81,8 +101,8 @@ export default function Home() {
               sizes="(min-width: 768px) 250px, 250px"
               className="rounded-full"
             />
-            <div className="flex items-baseline w-full flex-col md:hidden ">
-              <div className="flex gap-2 items-start flex-col jut">
+            <div className="flex items-baseline w-full flex-col md:hidden mt-9">
+              <div className="flex gap-2 items-start flex-col">
                 <h2 className="text-2xl font-bold">{data.name}</h2>
                 <p className="text-blue-500">@{data.login}</p>
               </div>
@@ -115,25 +135,25 @@ export default function Home() {
               </p>
             </div>
 
-            <p className="text-gray-500"> {data.bio} </p>
+            <p className="text-gray-500 dark:text-white"> {data.bio} </p>
 
-            <div className="flex justify-around items-center my-8 p-8 bg-[#F6F8FF] rounded-lg max-[30rem]: ">
+            <div className="flex justify-around items-center my-8 p-8 bg-[#F6F8FF] rounded-lg dark:bg-[#141D2F]  ">
               {/* The Dev Repo, Followers and following */}
               <div className="flex gap-2 items-center flex-col">
                 <p className="text-xs shrink-0">Repos</p>
-                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0">
+                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0 dark:text-white">
                   {data.public_repos}
                 </p>
               </div>
               <div className="flex gap-2 items-center flex-col">
                 <p className="text-xs shrink-0">Followers</p>
-                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0">
+                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0 dark:text-white">
                   {data.followers}
                 </p>
               </div>
               <div className="flex gap-2 items-center flex-col">
                 <p className="text-xs shrink-0">Following</p>
-                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0">
+                <p className="text-2xl text-[#2B3442] font-mono font-bold shrink-0 dark:text-white">
                   {data.following}
                 </p>
               </div>

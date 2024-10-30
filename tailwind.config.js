@@ -9,11 +9,12 @@ module.exports = {
     extend: {
       colors: {
         colors: {
-          'github-dark': '#1F2A48',
-          'github-blue': '#0079FF',
-        }
+          "github-dark": "#1F2A48",
+          "github-blue": "#0079FF",
+        },
       },
     },
   },
   plugins: [],
+  darkMode: "selector",
 };
